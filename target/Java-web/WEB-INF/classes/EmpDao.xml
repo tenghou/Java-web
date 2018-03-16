@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.EmpDao">
+	
+	<resultMap type="com.entity.Emp" id="empMap">
+		<id property="id" column="eid"/>
+		<result property="name" column="ename"/>
+		<result property="no" column="eno"/>
+		<result property="tel" column="etel"/>
+		<result property="inTime" column="einTime"/>
+		<result property="type" column="etype"/>
+		<result property="dno" column="edno"/>
+	</resultMap>
+	
+	<!-- 增加员工 -->
+	<insert id="add" parameterType="com.entity.Emp">
+		insert into emp(eid,ename,eno,etel,einTime,etype,edno)
+		values(#{id},#{name},#{no},#{tel},#{inTime},#{type},#{dno})
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

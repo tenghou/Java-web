@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="depNamespace">
+	
+	<resultMap type="com.entity.Dep" id="depMap">
+		<id property="id" column="did"/>
+		<result property="name" column="dname"/>
+		<result property="no" column="dno"/>
+		<result property="addr" column="daddr"/>
+		<association property="emp" resultMap="empNamespace.empMap"/>
+	</resultMap>
+	
+	<!-- 增加部门 -->
+	<insert id="add" parameterType="com.entity.Dep">
+		insert into dep(did,dname,dno,daddr)
+		values(#{id},#{name},#{no},#{addr})
+	</insert>
+
+	<!-- query -->
+	<select id="query" resultMap="depMap">
+-- 		SELECT d.dname,d.dno,e.ename,e.etel,e.einTime,e.etype
+		SELECT *
+		FROM emp e INNER JOIN dep d
+		on e.edno = d.dno
+		ORDER BY d.dname
+	</select>
+
+	<!-- query by id -->
+	<select id="querybyid" parameterType="map" resultMap="depMap">
+-- 		SELECT d.dname,d.dno,e.ename,e.etel,e.einTime,e.etype
+		SELECT *
+		FROM emp e INNER JOIN dep d
+		on e.edno = d.dno
+		<choose>
+			<when test="eid != null">
+				AND e.eid = ${eid}
+			</when>
+		</choose>
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

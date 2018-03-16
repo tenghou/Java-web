@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="empNamespace">
+	
+	<resultMap type="com.entity.Emp" id="empMap">
+		<id property="id" column="eid"/>
+		<result property="name" column="ename"/>
+		<result property="no" column="eno"/>
+		<result property="tel" column="etel"/>
+		<result property="inTime" column="einTime"/>
+		<result property="type" column="etype"/>
+		<result property="updateTime" column="eupdateTime"/>
+		<result property="dno" column="edno"/>
+		<collection property="depList" ofType="com.entity.Dep"/>
+	</resultMap>
+	
+	<!-- 增加员工 -->
+	<insert id="add" parameterType="com.entity.Emp">
+		insert into emp(eid,ename,eno,etel,einTime,etype,eupdateTime,edno)
+		values(#{id},#{name},#{no},#{tel},#{inTime},#{type},#{updateTime},#{dno})
+	</insert>
+
+	<select id="checkTime" parameterType="string" resultMap="empMap">
+		SELECT eid,eupdateTime FROM emp WHERE edno = #{dno}
+	</select>
+
+	<!-- 更新职级以及职级更新时间 -->
+	<update id="updateBatch" parameterType="map">
+		UPDATE emp
+		SET etype = etype + 1, eupdateTime = #{updateTime}
+		WHERE eid IN
+		<foreach collection="ids" item="ids" separator="," open="(" close=")">
+			#{ids}
+		</foreach>
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
